@@ -2,26 +2,25 @@ import { DataSource } from "typeorm";
 import User from "../models/User";
 
 
-const conectarDB = async () => {
-    try {
-        const dataSource =  new DataSource({
-            type: "postgres",
-            host: "localhost",
-            port: 5432,
-            username: "postgres",
-            password: "1233",
-            database: "test",
-            synchronize: true,
-            entities: [User],           
-        });
 
-        await dataSource.initialize();
-        return dataSource;
+const dataSource = new DataSource({
+    type: "postgres",
+    host: "localhost",
+    port: 5432,
+    username: "postgres",
+    password: "test",
+    database: "test",
+    synchronize: true,
+    entities: [User],
+});
 
-    } catch (error) {
-        throw error
-    }
-}
+dataSource.initialize()
+.then(() => {
+    console.log("Data Source has been initialized!")
+})
+.catch((err) => {
+    console.error("Error during Data Source initialization", err)
+})
 
+export default dataSource;
 
-export default conectarDB;
